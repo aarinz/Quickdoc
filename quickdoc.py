@@ -71,20 +71,18 @@ def docx_pdf(input_file, output_file):
 
 def main():
     parser = argparse.ArgumentParser(description="QuickDoc CLI Tool")
-    parser.add_argument('command', choices=['convert'], help='Command to execute')
     parser.add_argument('conversion_type', choices=['ppt2pdf', 'pdf2docx', 'docx2pdf'], help='Type of conversion')
-    parser.add_argument('--input', required=True, help='Input file name')
-    parser.add_argument('--output', required=True, help='Output file name')
+    parser.add_argument('--i', required=True, help='Input file name')
+    parser.add_argument('--o', required=True, help='Output file name')
 
     args = parser.parse_args()
 
-    if args.command == 'convert':
-        if args.conversion_type == 'ppt2pdf':
-            ppt_pdf(args.input, args.output)
-        elif args.conversion_type == 'pdf2docx':
-            pdf_docx(args.input, args.output)
-        elif args.conversion_type == 'docx2pdf':
-            docx_pdf(args.input, args.output)
+    if args.conversion_type == 'ppt2pdf':
+        ppt_pdf(args.i, args.o)
+    elif args.conversion_type == 'pdf2docx':
+        pdf_docx(args.i, args.o)
+    elif args.conversion_type == 'docx2pdf':
+        docx_pdf(args.i, args.o)
 
 if __name__ == '__main__':
     main()
