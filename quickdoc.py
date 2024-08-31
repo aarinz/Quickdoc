@@ -1,18 +1,23 @@
 import argparse
 import os
-import glob
+import subprocess
 from pdf2docx import Converter as PDF2DOCXConverter
 from docx2pdf import convert as DOCX2PDFConverter
-import subprocess
 
-def search_file(filename, search_path='/'):
-    for root, dirs, files in os.walk(search_path):
-        if filename in files:
-            return os.path.join(root, filename)
-    return None
+def find_file(filename):
+    try:
+        result = subprocess.run(f"find / -name {filename} 2>/dev/null", capture_output=True, text=True, shell=True)
+        found_files = result.stdout
+        if found_files:
+            return found_files[0]  
+        else:
+            return None
+    except Exception as e:
+        print(f"Error finding file '{filename}': {e}")
+        return None
 
 def ppt_pdf(input_file, output_file):
-    found_file = search_file(input_file)
+    found_file = find_file(input_file)
     if found_file:
         try:
             subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', found_file], check=True)
@@ -25,7 +30,7 @@ def ppt_pdf(input_file, output_file):
         print(f"No file found matching '{input_file}'")
 
 def pdf_docx(input_file, output_file):
-    found_file = search_file(input_file)
+    found_file = find_file(input_file)
     if found_file:
         try:
             converter = PDF2DOCXConverter(found_file)
@@ -37,7 +42,7 @@ def pdf_docx(input_file, output_file):
         print(f"No file found matching '{input_file}'")
 
 def docx_pdf(input_file, output_file):
-    found_file = search_file(input_file)
+    found_file = find_file(input_file)
     if found_file:
         try:
             DOCX2PDFConverter(found_file)
