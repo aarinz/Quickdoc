@@ -6,7 +6,7 @@ from docx2pdf import convert as DOCX2PDFConverter
 
 def find_file(filename):
     try:
-        result = subprocess.run(f"find / -name {filename} 2>/dev/null", capture_output=True, text=True, shell=True)
+        result = subprocess.run(['find', '/', '-name', filename], capture_output=True, text=True, shell=False)
         found_files = result.stdout.strip().split('\n')
         if found_files and found_files[0]:  
             return found_files[0]
