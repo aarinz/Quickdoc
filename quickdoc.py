@@ -7,9 +7,9 @@ from docx2pdf import convert as DOCX2PDFConverter
 def find_file(filename):
     try:
         result = subprocess.run(f"find / -name {filename} 2>/dev/null", capture_output=True, text=True, shell=True)
-        found_files = result.stdout
-        if found_files:
-            return found_files[0]  
+        found_files = result.stdout.strip().split('\n')
+        if found_files and found_files[0]:  
+            return found_files[0]
         else:
             return None
     except Exception as e:
@@ -20,10 +20,17 @@ def ppt_pdf(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
+            input_dir = os.path.dirname(found_file)
+            full_output_path = os.path.join(input_dir, output_file)
+
             subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', found_file], check=True)
             pdf_file = found_file.replace('.pptx', '.pdf')
-            os.rename(pdf_file, output_file)
-            print(f"Converted {found_file} to {output_file}")
+            
+            if os.path.exists(pdf_file):
+                os.rename(pdf_file, full_output_path)
+                print(f"Converted {found_file} to {full_output_path}")
+            else:
+                print(f"Conversion successful, but output file not found: {pdf_file}")
         except subprocess.CalledProcessError as e:
             print(f"Error converting {found_file} to PDF: {e}")
     else:
@@ -33,29 +40,34 @@ def pdf_docx(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
-            subprocess.run(['libreoffice', '--headless', '--convert-to', 'docx', found_file], check=True)
-            docx_file = found_file.replace('.pdf', '.docx')
-            os.rename(docx_file, output_file)
-            print(f"Converted {found_file} to {output_file}")
-        except subprocess.CalledProcessError as e:
+            input_dir = os.path.dirname(found_file)
+            full_output_path = os.path.join(input_dir, output_file)
+            converter = PDF2DOCXConverter(found_file)
+            converter.convert(full_output_path)
+            print(f"Converted {found_file} to {full_output_path}")
+        except Exception as e:
             print(f"Error converting {found_file} to DOCX: {e}")
     else:
         print(f"No file found matching '{input_file}'")
-
 
 def docx_pdf(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
+            input_dir = os.path.dirname(found_file)
+            full_output_path = os.path.join(input_dir, output_file)
+
             subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', found_file], check=True)
             pdf_file = found_file.replace('.docx', '.pdf')
-            os.rename(pdf_file, output_file)
-            print(f"Converted {found_file} to {output_file}")
+            if os.path.exists(pdf_file):
+                os.rename(pdf_file, full_output_path)
+                print(f"Converted {found_file} to {full_output_path}")
+            else:
+                print(f"Conversion successful, but output file not found: {pdf_file}")
         except subprocess.CalledProcessError as e:
             print(f"Error converting {found_file} to PDF: {e}")
     else:
         print(f"No file found matching '{input_file}'")
-
 
 def main():
     parser = argparse.ArgumentParser(description="QuickDoc CLI Tool")
