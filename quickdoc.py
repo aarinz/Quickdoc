@@ -33,26 +33,29 @@ def pdf_docx(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
-            converter = PDF2DOCXConverter(found_file)
-            converter.convert(output_file)
+            subprocess.run(['libreoffice', '--headless', '--convert-to', 'docx', found_file], check=True)
+            docx_file = found_file.replace('.pdf', '.docx')
+            os.rename(docx_file, output_file)
             print(f"Converted {found_file} to {output_file}")
-        except Exception as e:
+        except subprocess.CalledProcessError as e:
             print(f"Error converting {found_file} to DOCX: {e}")
     else:
         print(f"No file found matching '{input_file}'")
+
 
 def docx_pdf(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
-            DOCX2PDFConverter(found_file)
+            subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', found_file], check=True)
             pdf_file = found_file.replace('.docx', '.pdf')
             os.rename(pdf_file, output_file)
             print(f"Converted {found_file} to {output_file}")
-        except Exception as e:
+        except subprocess.CalledProcessError as e:
             print(f"Error converting {found_file} to PDF: {e}")
     else:
         print(f"No file found matching '{input_file}'")
+
 
 def main():
     parser = argparse.ArgumentParser(description="QuickDoc CLI Tool")
