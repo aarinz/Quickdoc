@@ -8,12 +8,10 @@ from docx2pdf import convert as DOCX2PDFConverter
 
 def find_file(filename):
     try:
-        result = subprocess.run(['find', '/', '-name', filename], capture_output=True, text=True, shell=False)
-        found_files = result.stdout.strip().split('\n')
-        if found_files and found_files[0]:
-            return found_files[0]
-        else:
-            return None
+        for root, dirs, files in os.walk(os.getcwd()):
+            if filename in files:
+                return os.path.join(root, filename)
+        return None
     except Exception as e:
         print(f"Error finding file '{filename}': {e}")
         return None
@@ -89,6 +87,5 @@ def main():
     elif args.conversion_type == 'docx2pdf':
         docx_pdf(args.i, args.o)
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     main()
-
