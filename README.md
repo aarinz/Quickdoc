@@ -30,31 +30,15 @@ I created QuickDoc because I found it frustrating that LibreOffice doesn't offer
 2. Navigate to the project directory:
 
     ```bash
-    cd quickdoc
+    cd Quickdoc
     ```
 
-3. Install the required Python packages:
+3. run these commands:
 
     ```bash
-    pip install pdf2docx docx2pdf
+    chmod +x quickdoc.sh
+    ./quickdoc.sh
     ```
-
-4. Open a terminal and use `nano` to create a file named `quickdoc` in `/usr/local/bin/`:
-
-    ```bash
-    sudo nano /usr/local/bin/quickdoc
-    ```
-
-5. Copy the contents of `quickdoc.py` into the file you just created with `nano`.
-
-6. Save and exit `nano` by pressing `Ctrl + O` to write the file, then `Enter` to confirm, and `Ctrl + X` to exit.
-
-7. Make the script executable:
-
-    ```bash
-    sudo chmod +x /usr/local/bin/quickdoc
-    ```
-
 ## Usage
 
 ### General Command Structure
