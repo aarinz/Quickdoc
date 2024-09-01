@@ -8,7 +8,7 @@ def find_file(filename):
     try:
         result = subprocess.run(['find', '/', '-name', filename], capture_output=True, text=True, shell=False)
         found_files = result.stdout.strip().split('\n')
-        if found_files and found_files[0]:  
+        if found_files and found_files[0]:
             return found_files[0]
         else:
             return None
@@ -70,7 +70,10 @@ def docx_pdf(input_file, output_file):
         print(f"No file found matching '{input_file}'")
 
 def main():
-    parser = argparse.ArgumentParser(description="QuickDoc CLI Tool")
+    parser = argparse.ArgumentParser(
+        description="QuickDoc CLI Tool",
+        usage="quickdoc <conversion_type> --i <input_file> --o <output_file>"
+    )
     parser.add_argument('conversion_type', choices=['ppt2pdf', 'pdf2docx', 'docx2pdf'], help='Type of conversion')
     parser.add_argument('--i', required=True, help='Input file name')
     parser.add_argument('--o', required=True, help='Output file name')
