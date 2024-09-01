@@ -24,7 +24,7 @@ I created QuickDoc because I found it frustrating that LibreOffice doesn't offer
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/quickdoc.git
+    git clone https://github.com/aarinz/Quickdoc.git
     ```
 
 2. Navigate to the project directory:
