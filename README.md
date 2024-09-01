@@ -1,7 +1,7 @@
 # QuickDoc
-QuickDoc is a command-line tool for Linux that allows you to convert documents between different formats, such as DOCX to PDF, PDF to DOCX, and PPT to PDF. It leverages LibreOffice, the default office suite in many Linux distributions, for handling document conversions. QuickDoc supports searching for input files across the entire system and saves output files in the same directory as the input file, ensuring seamless and efficient document management.
+QuickDoc is a command-line tool that allows you to convert documents between different formats, such as DOCX to PDF, PDF to DOCX, and PPT to PDF. It leverages LibreOffice, the default office suite in many Linux distributions, for handling document conversions. QuickDoc supports searching for input files across the entire system and saves output files in the same directory as the input file, ensuring seamless and efficient document management.
 
-I created QuickDoc because I found it frustrating that LibreOffice doesn't offer a direct option to convert PDF files to DOCX or other formats. It was inconvenient to rely on websites for file conversions, so I developed this command-line tool to simplify the process. QuickDoc makes it easy to convert files directly from the terminal, saving time and effort.
+I created QuickDoc because I found it frustrating that LibreOffice doesn't offer a direct option to convert PDF files to DOCX or other formats in my ubuntu. It was inconvenient to rely on websites for file conversions, so I developed this command-line tool to simplify the process. QuickDoc makes it easy to convert files directly from the terminal, saving time and effort.
 
 ## Features
 
