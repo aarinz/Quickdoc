@@ -8,7 +8,7 @@ from docx2pdf import convert as DOCX2PDFConverter
 
 def find_file(filename):
     try:
-        for root, dirs, files in os.walk(os.getcwd()):
+        for root, dirs, files in os.walk(os.getcwd()):  
             if filename in files:
                 return os.path.join(root, filename)
         return None
@@ -20,15 +20,13 @@ def ppt_pdf(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
-            input_dir = os.path.dirname(found_file)
-            full_output_path = os.path.join(input_dir, output_file)
-
             subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', found_file], check=True)
             pdf_file = found_file.replace('.pptx', '.pdf')
             
+            output_path = os.path.join(os.getcwd(), output_file)  
             if os.path.exists(pdf_file):
-                os.rename(pdf_file, full_output_path)
-                print(f"Converted {found_file} to {full_output_path}")
+                os.rename(pdf_file, output_path)
+                print(f"Converted {found_file} to {output_path}")
             else:
                 print(f"Conversion successful, but output file not found: {pdf_file}")
         except subprocess.CalledProcessError as e:
@@ -40,11 +38,10 @@ def pdf_docx(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
-            input_dir = os.path.dirname(found_file)
-            full_output_path = os.path.join(input_dir, output_file)
             converter = PDF2DOCXConverter(found_file)
-            converter.convert(full_output_path)
-            print(f"Converted {found_file} to {full_output_path}")
+            output_path = os.path.join(os.getcwd(), output_file)  
+            converter.convert(output_path)
+            print(f"Converted {found_file} to {output_path}")
         except Exception as e:
             print(f"Error converting {found_file} to DOCX: {e}")
     else:
@@ -54,14 +51,15 @@ def docx_pdf(input_file, output_file):
     found_file = find_file(input_file)
     if found_file:
         try:
-            input_dir = os.path.dirname(found_file)
-            full_output_path = os.path.join(input_dir, output_file)
-
+            
             subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', found_file], check=True)
             pdf_file = found_file.replace('.docx', '.pdf')
+            
+            
+            output_path = os.path.join(os.getcwd(), output_file)  
             if os.path.exists(pdf_file):
-                os.rename(pdf_file, full_output_path)
-                print(f"Converted {found_file} to {full_output_path}")
+                os.rename(pdf_file, output_path)
+                print(f"Converted {found_file} to {output_path}")
             else:
                 print(f"Conversion successful, but output file not found: {pdf_file}")
         except subprocess.CalledProcessError as e:
@@ -87,5 +85,5 @@ def main():
     elif args.conversion_type == 'docx2pdf':
         docx_pdf(args.i, args.o)
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     main()
