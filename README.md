@@ -15,7 +15,7 @@ I created QuickDoc because I found it frustrating that LibreOffice doesn't offer
 
 - Python 3.x
 - LibreOffice (for PPT to PDF and DOCX to PDF conversion)
-- Required Python packages(will be automatically done after you run the script):
+- Required Python packages(will be automatically installed after you run the script):
   - `pdf2docx`
   - `docx2pdf`
 
